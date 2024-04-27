@@ -11,7 +11,7 @@ class User(AbstractUser):
 
 
     address = models.TextField(blank=True)
-    age = models.PositiveSmallIntegerField(blank=True)
+    age = models.PositiveSmallIntegerField(blank=True, null=True)
     description = models.TextField(blank=True)
     gender = models.CharField(max_length=1,
                               choices=GENDER_CHOICES,
