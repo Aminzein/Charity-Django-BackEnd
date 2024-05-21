@@ -18,3 +18,6 @@ class User(AbstractUser):
                               blank=True)
     phone = models.CharField(max_length=15,
                              blank=True)
+    
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"

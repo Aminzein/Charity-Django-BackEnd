@@ -20,6 +20,26 @@ class Charity(models.Model):
     reg_number = models.CharField(max_length=10)
 
 
+
+
+class TaskManager(models.Manager):
+    def related_tasks_to_charity(self, user):
+        return Task.objects.filter(charity__user=user)
+
+    def related_tasks_to_benefactor(self, user):
+        return Task.objects.filter(assigned_benefactor__user=user)
+
+    def all_related_tasks_to_user(self, user):
+        return Task.objects.filter(Q(state__exact="P") |
+                                    Q(charity__user=user) |
+                                    Q(assigned_benefactor__user=user))
+
+
+
+
+
+
+
 class Task(models.Model):
     GENDER_CHOICES = (
         ("F", "Female"),
@@ -48,4 +68,4 @@ class Task(models.Model):
                              default="P",
                              choices=STATE_CHOICES)
     title = models.CharField(max_length=60)
-    
+    objects = TaskManager()
